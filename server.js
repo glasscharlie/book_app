@@ -18,6 +18,8 @@ app.use(express.static('./public'));
 app.get ('/', newSearch);
 app.post('/searches', searchForBooks);
 
+let testArray = [];
+
 function newSearch(req, res) {
   res.render('index');
 }
@@ -36,18 +38,21 @@ function searchForBooks(req, res) {
   }
   superagent.get(url)
     .then(results => {
-      console.log('return from google books:', results.body.items);
-      const bookArray = results.body.items.map(book => {
-        return new Book(book.volumeInfo);
+    //   console.log('return from google books:', results.body.items);
+      testArray = [];
+      results.body.items.map(book => {
+        testArray.push( new Book(book.volumeInfo));
+        console.log(testArray);
       })
+      res.status(200).render('searches/show', {data: testArray});
     })
-    res.status(200).render('searches/show');
 }
 
+
 function Book(bookObj) {
-  const placeholderImage = `https://www.freeiconspng.com/uploads/book-icon--icon-search-engine-6.png`;
+  this.Image = `https://www.freeiconspng.com/uploads/book-icon--icon-search-engine-6.png`;
   this.title = bookObj.title || 'no book title available';
-  this.author = bookObj.author;
+  this.author = bookObj.authors;
   this.description = bookObj.description;
 }
 

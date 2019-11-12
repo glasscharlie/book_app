@@ -1,1 +1,17 @@
-display my search results here
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <h1>Book List</h1>
+    <p><a href="/">Home</a></p>
+        <ul> 
+            <% data.forEach((item)=>{%> 
+            <li>title: <%=item.title%> </li>  
+            <li>author: <%=item.author%></li>
+            <li>description: <%=item.description%></li>
+            <%});%> 
+        </ul> 
+
+
+  </body>
+</html>
