@@ -12,4 +12,7 @@ CREATE TABLE books (
 
 
 INSERT INTO books (title, author, isbn, image_url, book_description, bookshelf)
-VALUES ('fakeBook', 'Dr Suess', '912-02', 'testurl', 'description of book', 'good books');
+VALUES ('fakeBook', 'Dr Suess', '912-02', 'https://images-na.ssl-images-amazon.com/images/I/51Y0D3occqL._SX373_BO1,204,203,200_.jpg', 'description of book', 'good books');
+
+INSERT INTO books (title, author, isbn, image_url, book_description, bookshelf)
+VALUES ('fakeBookTwo', 'JK Rowling', '156-092', 'https://images-na.ssl-images-amazon.com/images/I/51Y0D3occqL._SX373_BO1,204,203,200_.jpg', 'description of book', 'good books');

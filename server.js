@@ -20,7 +20,11 @@ app.use(express.static('./public'));
 
 app.get ('/search', newSearch);
 app.get('/', getBooks);
-app.post('/searches', searchForBooks)
+app.post('/searches', searchForBooks);
+app.get('/add', showForm);
+app.post('/add', addBook);
+app.use('*', notFoundHandler);
+app.use(errorHandler);
 
 let testArray = [];
 
@@ -65,10 +69,31 @@ function getBooks(req, res) {
 
   return client.query(SQL)
     .then( results => res.render('index', { results: results.rows }))
+
     // .catch( err => console.error(err));
 }
 
+function showForm(req, res) {
+  res.render('add');
+}
 
+function addBook(req, res) {
+  let {title, book_description, author, isbn, image_url, bookshelf} = req.body;
+  let SQL = 'INSERT into books(title, author, isbn, image_url, book_description, bookshelf) VALUES ($1, $2, $3, $4, $5, $6);';
+  let values = [title, author, isbn, image_url, book_description, bookshelf];
+
+  return client.query(SQL, values)
+    .then(res.redirect('/'))
+    .catch( err => console.error(err));
+}
+
+function notFoundHandler(request, response) {
+  response.status(404).send('that page does not exist');
+}
+
+function errorHandler(error, request, response) {
+  response.status(500).send(error);
+}
 
 client.connect()
   .then(() => {
