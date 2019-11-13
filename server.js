@@ -11,17 +11,21 @@ require('ejs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const client = new pg.Client(process.env.DATABASE_URL);
+client.on('err', err => { throw err; });
+
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use(express.static('./public'));
 
-app.get ('/', newSearch);
-app.post('/searches', searchForBooks);
+app.get ('/search', newSearch);
+app.get('/', getBooks);
+app.post('/searches', searchForBooks)
 
 let testArray = [];
 
 function newSearch(req, res) {
-  res.render('index');
+  res.render('search');
 }
 
 function searchForBooks(req, res) {
@@ -42,7 +46,7 @@ function searchForBooks(req, res) {
       testArray = [];
       results.body.items.map(book => {
         testArray.push( new Book(book.volumeInfo));
-        console.log(testArray);
+        // console.log(testArray);
       })
       res.status(200).render('searches/show', {data: testArray});
     })
@@ -56,9 +60,23 @@ function Book(bookObj) {
   this.description = bookObj.description;
 }
 
+function getBooks(req, res) {
+  let SQL = 'SELECT * FROM books;';
 
-app.listen(PORT, () => {
-  console.log(`listening on ${PORT}`);
-})
+  return client.query(SQL)
+    .then( results => res.render('index', { results: results.rows }))
+    // .catch( err => console.error(err));
+}
 
+
+
+client.connect()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`listening on ${PORT}`);
+    })
+  })
+  .catch(err => {
+    throw `PG startup error ${err.message}`;
+  })
 
