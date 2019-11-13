@@ -11,27 +11,16 @@
     </head>
 
     <body>
-        <h1>search for books!</h1>
-        <form action="/searches" method="post">
-        <input type="text" name="search" placeholder="search for a book or author">
 
-        <fieldset>
-            <label for="title">
-                <span>title:</span>
-                <input type="radio" name="search"value="title">
-            </label>
-        </fieldset>
-
-        <fieldset>
-            <label for="author">
-                <span>author:</span>
-                <input type="radio" name="search"value="author">
-            </label>
-        </fieldset>
-
-        <button type="submit">search google books</button>
-
-        </form>
+            <h1>Book List</h1>
+            <p><a href="/search">Search</a></p>
+                <ul> 
+                    <% results.forEach((item)=>{%> 
+                    <li>title: <%=item.title%> </li>  
+                    <li>author: <%=item.author%></li>
+                    <li>description: <%=item._book_description%></li>
+                    <%});%> 
+                </ul> 
         
 
     </body>
