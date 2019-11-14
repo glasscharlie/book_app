@@ -47,12 +47,16 @@ function searchForBooks(req, res) {
   }
   superagent.get(url)
     .then(results => {
-    //   console.log('return from google books:', results.body.items);
+      // console.log('return from google books:', results.body.items);
       testArray = [];
       results.body.items.map(book => {
         testArray.push( new Book(book.volumeInfo));
-        // console.log(testArray);
+        console.log(book.volumeInfo);
       })
+      let {title, book_description, author, isbn, image_url, bookshelf} = req.body;
+      let SQL = 'INSERT into books(title, author, isbn, image_url, book_description, bookshelf) VALUES ($1, $2, $3, $4, $5, $6);';
+      let values = [title, author, isbn, image_url, book_description, bookshelf];
+      client.query(SQL, values)
       res.status(200).render('searches/show', {data: testArray});
     })
 }
@@ -71,7 +75,7 @@ function getBooks(req, res) {
   return client.query(SQL)
     .then( results => res.render('index', { results: results.rows }))
 
-    // .catch( err => console.error(err));
+    .catch( err => console.error(err));
 }
 
 function showForm(req, res) {

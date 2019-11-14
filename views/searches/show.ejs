@@ -8,11 +8,18 @@
             <% data.forEach((item)=>{%> 
             <li>title: <%=item.title%> </li>  
             <li>author: <%=item.author%></li>
-            <li>description: <%=item._book_description%></li>
-            <button type="submit">save</button>
+            <li>description: <%=item.book_description%></li>
+            <form action="/add" method="post">
+            <input type="hidden" name="title" placeholder="title" value="<%=item.title%>">
+            <input type="hidden" name="author" placeholder="author" value="<%=item.authors%>">
+            <input type="hidden" name="description" value="<%=item.description%>"></input>
+            <input type="hidden" name="image_url" placeholder="image_url" value="<%=item.image_url%>">
+            <input type="hidden" name="isbn" placeholder="isbn" value="<%=item.industryIdentifiers%>">
+            <input type="hidden" name="bookshelf" placeholder="bookshelf" value="my bookshelf">
+            <button type="submit">Save book!</button>
             <%});%> 
+          </form>
         </ul> 
-
 
   </body>
 </html>
