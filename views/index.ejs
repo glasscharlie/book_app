@@ -2,25 +2,23 @@
 
 <html>
     <head>
-        <title>book app</title>
-        <link rel="stylesheet" href="reset.css">
-        <link rel="stylesheet" href="base.css">
-        <link rel="stylesheet" href="icons.css">
-        <link rel="stylesheet" href="layout.css">
-        <link rel="stylesheet" href="modules.css">
+            <%- include('./layout/head'); -%>
     </head>
 
     <body>
 
-            <h1>Book List</h1>
-            <p><a href="/search">Search</a></p>
-                <ul> 
-                    <% results.forEach((item)=>{%> 
-                    <li>title: <%=item.title%> </li>  
-                    <li>author: <%=item.author%></li>
-                    <li>description: <%=item._book_description%></li>
-                    <%});%> 
-                </ul> 
+    <h1>Book List</h1>
+    <p><a href="/search">Search</a></p>
+     <h3>total books: <%=results.length%></h3>
+                 
+        <% results.forEach((item)=>{%> 
+        <img src=<%=item.image_url%>></img>
+        <h3>title: <%=item.title%> </h3>  
+         <p>author: <%=item.author%></p>
+         <button type="submit" onclick="window.location.href='/<%=item.id%>';">view details</button>
+         
+         <%});%> 
+        
         
 
     </body>
