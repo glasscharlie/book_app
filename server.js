@@ -23,6 +23,7 @@ app.get('/', getBooks);
 app.post('/searches', searchForBooks);
 app.get('/add', showForm);
 app.post('/add', addBook);
+app.get('/:id', showDetail)
 app.use('*', notFoundHandler);
 app.use(errorHandler);
 
@@ -84,6 +85,17 @@ function addBook(req, res) {
 
   return client.query(SQL, values)
     .then(res.redirect('/'))
+    .catch( err => console.error(err));
+}
+
+function showDetail(req, res) {
+  let SQL = 'SELECT * FROM books WHERE id=$1;';
+  let values = [req.params.id];
+
+  return client.query(SQL, values)
+    .then( result => {
+      return res.render('pages/books/details', { book: result.rows[0] });
+    })
     .catch( err => console.error(err));
 }
 

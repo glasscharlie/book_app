@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../../../views/layout/head'); -%>
+  </head>
+  <body>
+    <main>
+      <ul>
+        <li>
+          <h3>title: <%= book.title %></h3>
+          <p>author: <%= book.author %></p>
+          <img src=<%=book.image_url%>></img>
+          <p>description: <%= book.book_description %></p>
+          <p>bookshelf: <%= book.bookshelf %></p>
+          <p>isbn: <%= book.isbn %></p>         
+          <button type="submit">update</button>
+          <button type="submit">delete</button>
+        </li>
+      </ul>
+      </form>
+    </main>
+  </body>
+</html>
