@@ -6,20 +6,32 @@
     <p><a href="/">Home</a></p>
         <ul> 
             <% data.forEach((item)=>{%> 
+            <img src="<%=item.image_url%>"></img>
             <li>title: <%=item.title%> </li>  
             <li>author: <%=item.author%></li>
-            <li>description: <%=item.book_description%></li>
+            <li>description: <%=item.description%></li>
+            <li>isbn: <%=item.isbn%></li>
             <form action="/add" method="post">
-            <input type="hidden" name="title" placeholder="title" value="<%=item.title%>">
-            <input type="hidden" name="author" placeholder="author" value="<%=item.authors%>">
-            <input type="hidden" name="description" value="<%=item.description%>"></input>
-            <input type="hidden" name="image_url" placeholder="image_url" value="<%=item.image_url%>">
-            <input type="hidden" name="isbn" placeholder="isbn" value="<%=item.industryIdentifiers%>">
-            <input type="hidden" name="bookshelf" placeholder="bookshelf" value="my bookshelf">
-            <button type="submit">Save book!</button>
-            <%});%> 
+              <input type="hidden" name="title" value="<%=item.title%>">
+              <input type="hidden" name="author" value="<%=item.author%>">
+              <input type="hidden" name="book_description" value="<%=item.description%>">
+              <input type="hidden" name="image_url" value="<%=item.image_url%>">
+              <input type="hidden" name="isbn" value="<%=item.isbn%>">
+              <input name="bookshelf" type="text">
+              <button type="submit">Save book!</button>
           </form>
         </ul> 
+            <%});%> 
 
   </body>
 </html>
+
+
+
+
+<!-- <input type="hidden" name="title" value="charlie">
+<input type="hidden" name="author" value="dr suess">
+<input type="hidden" name="description" value="good book">
+<input type="hidden" name="image_url" value="https://images-na.ssl-images-amazon.com/images/I/41fhsnzKEgL._SX258_BO1,204,203,200_.jpg">
+<input type="hidden" name="isbn"value="009099090">
+<input name="bookshelf" type="text"> -->
