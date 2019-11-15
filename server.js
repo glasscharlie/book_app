@@ -51,7 +51,6 @@ function searchForBooks(req, res) {
       testArray = [];
       results.body.items.map(book => {
         testArray.push( new Book(book.volumeInfo));
-        console.log(book.volumeInfo);
       })
       let {title, book_description, author, isbn, image_url, bookshelf} = req.body;
       let SQL = 'INSERT into books(title, author, isbn, image_url, book_description, bookshelf) VALUES ($1, $2, $3, $4, $5, $6);';
@@ -63,11 +62,13 @@ function searchForBooks(req, res) {
 
 
 function Book(bookObj) {
-  this.Image = `https://www.freeiconspng.com/uploads/book-icon--icon-search-engine-6.png`;
-  this.title = bookObj.title || 'no book title available';
+  this.image_url = bookObj.imageLinks.smallThumbnail;
+  this.title = bookObj.title;
   this.author = bookObj.authors;
   this.description = bookObj.description;
+  this.isbn = bookObj.industryIdentifiers[0].identifier;
 }
+
 
 function getBooks(req, res) {
   let SQL = 'SELECT * FROM books;';
